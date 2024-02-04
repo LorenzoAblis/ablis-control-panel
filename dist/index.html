@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="./brand_logssso.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ablis Control Panel</title>
+    <!-- <meta name="theme-color" />
+    <meta name="color-scheme" content="light" /> -->
+    <script type="module" crossorigin src="/assets/index-W__iKTfw.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-hu7wdyW0.css" />
+    <link rel="manifest" href="/manifest.json" />
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("./serviceworker.js")
+          .then((registration) => {
+            console.log(
+              "Service Worker registered with scope:",
+              registration.scope
+            );
+          })
+          .catch((error) => {
+            console.error("Service Worker registration failed:", error);
+          });
+      });
+    }
+  </script>
+</html>
