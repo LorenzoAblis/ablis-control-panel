@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { db } from "../firebaseConfig";
 import { ref, set } from "firebase/database";
@@ -62,10 +62,10 @@ const CartModal = (props) => {
                   variant="secondary"
                   onClick={() => handleUncomplete(item)}
                 >
-                  <i class="bi bi-arrow-counterclockwise"></i>
+                  <i className="bi bi-arrow-counterclockwise"></i>
                 </Button>
                 <Button variant="success" onClick={() => handleEdit(item)}>
-                  <i class="bi bi-pencil-square"></i>
+                  <i className="bi bi-pencil-square"></i>
                 </Button>
               </div>
             ))}

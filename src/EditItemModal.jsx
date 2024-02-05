@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { db } from '../firebaseConfig';
-import { ref, set, remove } from 'firebase/database';
-import toast from 'react-hot-toast';
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { db } from "../firebaseConfig";
+import { ref, set, remove } from "firebase/database";
+import toast from "react-hot-toast";
 
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 const EditItemModal = (props) => {
   const { item, showEditItemModal, setShowEditItemModal } = props;
@@ -16,8 +16,8 @@ const EditItemModal = (props) => {
 
   const handleEdit = async () => {
     if (item.name) {
-      await remove(ref(db, 'shopping_items/' + item.name));
-      await set(ref(db, 'shopping_items/' + edittedItem.name), edittedItem);
+      await remove(ref(db, "shopping_items/" + item.name));
+      await set(ref(db, "shopping_items/" + edittedItem.name), edittedItem);
     }
 
     setEdittedItem({});
@@ -30,7 +30,7 @@ const EditItemModal = (props) => {
 
   const handleDelete = async () => {
     if (item.name) {
-      await remove(ref(db, 'shopping_items/' + item.name));
+      await remove(ref(db, "shopping_items/" + item.name));
     }
 
     toast.success(`Deleted ${item.name}`);
@@ -83,7 +83,7 @@ const EditItemModal = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={handleDelete}>
-            <i class="bi bi-trash"></i>
+            <i className="bi bi-trash"></i>
           </Button>
           <Button variant="secondary" onClick={handleClose}>
             Close

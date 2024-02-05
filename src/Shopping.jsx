@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
-import { ref, set, remove, onValue } from "firebase/database";
+import { ref, set, onValue } from "firebase/database";
 import toast from "react-hot-toast";
 
 import Button from "react-bootstrap/Button";
@@ -10,6 +11,7 @@ import AddItemModal from "./AddItemModal";
 import "./Shopping.css";
 
 const Shopping = () => {
+  const navigate = useNavigate();
   const [items, setItems] = useState([]);
 
   const [showCartModal, setShowCartModal] = useState(false);
@@ -57,6 +59,7 @@ const Shopping = () => {
     <>
       <button onClick={() => setShowAddItemModal(true)}>Add Item</button>
       <button onClick={() => setShowCartModal(true)}>Cart</button>
+      <button onClick={() => navigate("/inventory")}>Inventory</button>
 
       <section className="d-flex flex-column gap-5 pb-5">
         {common_stores.map((store) => (
@@ -77,7 +80,7 @@ const Shopping = () => {
                     className="h-50"
                     onClick={() => handleComplete(item)}
                   >
-                    <i class="bi bi-check-lg"></i>
+                    <i className="bi bi-check-lg"></i>
                   </Button>
                   <div>
                     <div className="d-flex flex-row gap-3">
@@ -86,7 +89,7 @@ const Shopping = () => {
                         variant="success"
                         onClick={() => handleEdit(item)}
                       >
-                        <i class="bi bi-pencil-square"></i>
+                        <i className="bi bi-pencil-square"></i>
                       </Button>
                     </div>
                     <section className="d-flex flex-column">
@@ -125,13 +128,13 @@ const Shopping = () => {
                 className="h-50"
                 onClick={() => handleComplete(item)}
               >
-                <i class="bi bi-check-lg"></i>
+                <i className="bi bi-check-lg"></i>
               </Button>
               <div>
                 <div className="d-flex flex-row gap-3">
                   <h2 className="fw-bold">{item.name}</h2>
                   <Button variant="success" onClick={() => handleEdit(item)}>
-                    <i class="bi bi-pencil-square"></i>
+                    <i className="bi bi-pencil-square"></i>
                   </Button>
                 </div>
                 <section className="d-flex flex-column">

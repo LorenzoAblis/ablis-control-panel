@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { db } from '../firebaseConfig';
-import { ref, remove } from 'firebase/database';
-import toast from 'react-hot-toast';
+// import React from 'react';
+import PropTypes from "prop-types";
+import { db } from "../firebaseConfig";
+import { ref, remove, set } from "firebase/database";
+import toast from "react-hot-toast";
 
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 const CheckoutConfirmationModal = (props) => {
   const {
@@ -23,11 +23,25 @@ const CheckoutConfirmationModal = (props) => {
       .filter((item) => item.completed)
       .map(async (item) => {
         if (item.name) {
-          await remove(ref(db, 'shopping_items/' + item.name));
+          const timestamp = Date.now();
+          const formattedDate = new Date(timestamp).toLocaleDateString("en-US");
+
+          await remove(ref(db, "shopping_items/" + item.name));
+
+          // TODO: Add the 4 categories
+          await set(ref(db, "inventory/" + item.name), {
+            name: item.name,
+            quantity: item.quantity,
+            location: item.location,
+            timestamp: formattedDate,
+            category: "", // Electronics, Food, etc
+            expirationDate: "", // Blank expiration date
+            notes: "", // Notes
+          });
         }
       });
 
-    toast.success('Checkout successful!');
+    toast.success("Checkout successful!");
     setShowCheckoutConfirmationModal(false);
   };
 
@@ -39,10 +53,10 @@ const CheckoutConfirmationModal = (props) => {
         </Modal.Header>
         <Modal.Body>
           Are you sure you want to checkout?
-          <br /> This will delete{' '}
+          <br /> This will delete{" "}
           <span className="fw-bold">
             {items.filter((item) => item.completed).length}
-          </span>{' '}
+          </span>{" "}
           items
         </Modal.Body>
 
