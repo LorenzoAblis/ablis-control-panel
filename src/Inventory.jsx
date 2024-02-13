@@ -3,6 +3,7 @@ import { db } from "../firebaseConfig";
 import { ref, onValue } from "firebase/database";
 
 import Card from "react-bootstrap/Card";
+import ExpandedItemModal from "./ExpandedItem";
 
 export const Inventory = () => {
   const [items, setItems] = useState([]);
@@ -48,6 +49,12 @@ export const Inventory = () => {
           </Card>
         ))}
       </main>
+
+      <ExpandedItemModal
+        item={itemToExpand}
+        showExpandedView={showExpandedView}
+        setShowExpandedView={setShowExpandedView}
+      />
     </>
   );
 };
