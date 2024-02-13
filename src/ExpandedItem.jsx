@@ -6,10 +6,12 @@ import toast from "react-hot-toast";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import EditItemModal from "./EditItemModal";
 
 const ExpandedItemModal = (props) => {
   const { item, showExpandedView, setShowExpandedView } = props;
 
+  const [showEditItemModal, setShowEditItemModal] = useState(false);
   const handleClose = () => setShowExpandedView(false);
 
   return (
@@ -17,7 +19,7 @@ const ExpandedItemModal = (props) => {
       <Modal show={showExpandedView} onHide={handleClose}>
         <Modal.Header closeButton className="d-flex gap-3">
           <Modal.Title className="fs-1">{item.name}</Modal.Title>
-          <Button variant="success">
+          <Button variant="success" onClick={() => setShowEditItemModal(true)}>
             <i className="bi bi-pencil-square"></i>
           </Button>
         </Modal.Header>
@@ -43,6 +45,13 @@ const ExpandedItemModal = (props) => {
           </p>
         </Modal.Body>
       </Modal>
+
+      <EditItemModal
+        item={item}
+        editType="inventory"
+        showEditItemModal={showEditItemModal}
+        setShowEditItemModal={setShowEditItemModal}
+      />
     </>
   );
 };

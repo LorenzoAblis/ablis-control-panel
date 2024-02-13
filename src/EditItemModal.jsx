@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 const EditItemModal = (props) => {
-  const { item, showEditItemModal, setShowEditItemModal } = props;
+  const { item, editType, showEditItemModal, setShowEditItemModal } = props;
 
   const [edittedItem, setEdittedItem] = useState({ name: item.name });
 
@@ -16,8 +16,13 @@ const EditItemModal = (props) => {
 
   const handleEdit = async () => {
     if (item.name) {
-      await remove(ref(db, "shopping_items/" + item.name));
-      await set(ref(db, "shopping_items/" + edittedItem.name), edittedItem);
+      if (editType === "inventory") {
+        await remove(ref(db, "inventory/" + item.name));
+        await set(ref(db, "inventory/" + edittedItem.name), edittedItem);
+      } else if (editType === "shopping") {
+        await remove(ref(db, "shopping_items/" + item.name));
+        await set(ref(db, "shopping_items/" + edittedItem.name), edittedItem);
+      }
     }
 
     setEdittedItem({});
@@ -30,7 +35,11 @@ const EditItemModal = (props) => {
 
   const handleDelete = async () => {
     if (item.name) {
-      await remove(ref(db, "shopping_items/" + item.name));
+      if (editType === "inventory") {
+        await remove(ref(db, "inventory/" + item.name));
+      } else if (editType === "shopping") {
+        await remove(ref(db, "shopping_items/" + item.name));
+      }
     }
 
     toast.success(`Deleted ${item.name}`);
@@ -99,6 +108,7 @@ const EditItemModal = (props) => {
 
 EditItemModal.propTypes = {
   item: PropTypes.object.isRequired,
+  editType: PropTypes.string.isRequired,
   showEditItemModal: PropTypes.bool.isRequired,
   setShowEditItemModal: PropTypes.func.isRequired,
 };

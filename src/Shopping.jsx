@@ -111,7 +111,7 @@ const Shopping = () => {
       <section>
         <h1 className="fs-1 fw-normal pb-2">Other</h1>
         {items.filter(
-          (item) => !common_stores.includes(item.location) && !item.completed
+          (item) => !common_stores.includes(item.location) && !item.completed,
         ).length == 0 && (
           <div className="d-flex justify-content-center">
             <h4 className="text-secondary">No items</h4>
@@ -119,7 +119,7 @@ const Shopping = () => {
         )}
         {items
           .filter(
-            (item) => !common_stores.includes(item.location) && !item.completed
+            (item) => !common_stores.includes(item.location) && !item.completed,
           )
           .map((item, index) => (
             <div key={index} className="d-flex gap-2">
@@ -167,6 +167,7 @@ const Shopping = () => {
 
       <EditItemModal
         item={itemToEdit}
+        editType="shopping"
         showEditItemModal={showEditItemModal}
         setShowEditItemModal={setShowEditItemModal}
       />
