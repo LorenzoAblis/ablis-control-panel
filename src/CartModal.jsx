@@ -77,6 +77,7 @@ const CartModal = (props) => {
 
       <EditItemModal
         item={itemToEdit}
+        editType="shopping"
         showEditItemModal={showEditItemModal}
         setShowEditItemModal={setShowEditItemModal}
       />

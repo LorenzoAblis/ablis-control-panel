@@ -51,6 +51,7 @@ const ExpandedItemModal = (props) => {
         editType="inventory"
         showEditItemModal={showEditItemModal}
         setShowEditItemModal={setShowEditItemModal}
+        setShowExpandedView={setShowExpandedView}
       />
     </>
   );

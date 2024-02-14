@@ -8,7 +8,13 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 const EditItemModal = (props) => {
-  const { item, editType, showEditItemModal, setShowEditItemModal } = props;
+  const {
+    item,
+    editType,
+    showEditItemModal,
+    setShowEditItemModal,
+    setShowExpandedView,
+  } = props;
 
   const [edittedItem, setEdittedItem] = useState({ name: item.name });
 
@@ -31,6 +37,7 @@ const EditItemModal = (props) => {
       toast.success(`Editted ${item.name}`);
     }, 100);
     setShowEditItemModal(false);
+    setShowExpandedView(false);
   };
 
   const handleDelete = async () => {
