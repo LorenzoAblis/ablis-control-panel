@@ -118,6 +118,7 @@ EditItemModal.propTypes = {
   editType: PropTypes.string.isRequired,
   showEditItemModal: PropTypes.bool.isRequired,
   setShowEditItemModal: PropTypes.func.isRequired,
+  setShowExpandedView: PropTypes.func.isRequired,
 };
 
 export default EditItemModal;

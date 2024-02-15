@@ -74,7 +74,7 @@ const Shopping = () => {
             {items
               .filter((item) => item.location === store && !item.completed)
               .map((item, index) => (
-                <div key={index} className="d-flex gap-2">
+                <div key={index} className="d-flex gap-2 pb-3">
                   <Button
                     variant="outline-secondary"
                     className="h-50"
@@ -96,10 +96,12 @@ const Shopping = () => {
                       <p className="mb-0">
                         Amount: <span className="fw-bold">{item.quantity}</span>
                       </p>
-                      <p>
-                        Description:{" "}
-                        <span className="fw-bold">{item.description}</span>
-                      </p>
+                      {item.description !== "" && (
+                        <p>
+                          Description:{" "}
+                          <span className="fw-bold">{item.description}</span>
+                        </p>
+                      )}
                     </section>
                   </div>
                 </div>
@@ -122,7 +124,7 @@ const Shopping = () => {
             (item) => !common_stores.includes(item.location) && !item.completed,
           )
           .map((item, index) => (
-            <div key={index} className="d-flex gap-2">
+            <div key={index} className="d-flex gap-2 pb-3">
               <Button
                 variant="outline-secondary"
                 className="h-50"
@@ -144,10 +146,12 @@ const Shopping = () => {
                   <p className="mb-0">
                     Location: <span className="fw-bold">{item.location}</span>
                   </p>
-                  <p>
-                    Description:{" "}
-                    <span className="fw-bold">{item.description}</span>
-                  </p>
+                  {item.description !== "" && (
+                    <p>
+                      Description:{" "}
+                      <span className="fw-bold">{item.description}</span>
+                    </p>
+                  )}
                 </section>
               </div>
             </div>

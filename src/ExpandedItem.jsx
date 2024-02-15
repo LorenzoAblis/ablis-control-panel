@@ -25,7 +25,7 @@ const ExpandedItemModal = (props) => {
         </Modal.Header>
         <Modal.Body>
           <p>
-            Quantity: <span className="fw-bold">{item.quantity}</span>
+            Amount: <span className="fw-bold">{item.quantity}</span>
           </p>
           <p>
             Location: <span className="fw-bold">{item.location}</span>
