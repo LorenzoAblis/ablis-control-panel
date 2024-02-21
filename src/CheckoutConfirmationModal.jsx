@@ -1,7 +1,7 @@
 // import React from 'react';
 import PropTypes from "prop-types";
 import { db } from "../firebaseConfig";
-import { ref, remove, set } from "firebase/database";
+import { ref, remove, set, get } from "firebase/database";
 import toast from "react-hot-toast";
 
 import Button from "react-bootstrap/Button";
@@ -26,18 +26,32 @@ const CheckoutConfirmationModal = (props) => {
           const timestamp = Date.now();
           const formattedDate = new Date(timestamp).toLocaleDateString("en-US");
 
-          await remove(ref(db, "shopping_items/" + item.name));
+          const itemRef = ref(db, "inventory/" + item.name);
+          const snapshot = await get(itemRef);
+          const currentItem = snapshot.val();
 
-          // TODO: Add the 4 categories
-          await set(ref(db, "inventory/" + item.name), {
-            name: item.name,
-            quantity: item.quantity,
-            location: item.location,
-            timestamp: formattedDate,
-            category: "", // Electronics, Food, etc
-            expirationDate: "", // Blank expiration date
-            notes: "", // Notes
-          });
+          if (currentItem) {
+            // If the item exists, update its quantity
+            const newQuantity = currentItem.quantity + item.quantity;
+            await set(ref(db, "inventory/" + item.name), {
+              ...currentItem,
+              quantity: newQuantity,
+              timestamp: formattedDate,
+            });
+          } else {
+            // If the item doesn't exist, add it to the inventory
+            await set(ref(db, "inventory/" + item.name), {
+              name: item.name,
+              quantity: item.quantity,
+              location: item.location,
+              timestamp: formattedDate,
+              category: "", // Electronics, Food, etc
+              expirationDate: "", // Blank expiration date
+              notes: "", // Notes
+            });
+          }
+
+          await remove(ref(db, "shopping_items/" + item.name));
         }
       });
 

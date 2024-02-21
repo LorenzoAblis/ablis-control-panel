@@ -42,7 +42,7 @@ const Shopping = () => {
   const handleComplete = async (item) => {
     await set(ref(db, "shopping_items/" + item.name), {
       name: item.name,
-      quantity: item.quantity,
+      quantity: Number(item.quantity),
       location: item.location,
       description: item.description,
       completed: true,
@@ -61,7 +61,7 @@ const Shopping = () => {
       <button onClick={() => setShowCartModal(true)}>Cart</button>
       <button onClick={() => navigate("/inventory")}>Inventory</button>
 
-      <section className="d-flex flex-column gap-5 pb-5">
+      <section className="d-flex flex-column gap-4 pb-3">
         {common_stores.map((store) => (
           <section key={store.name}>
             <h1 className="fs-1 fw-normal pb-2">{store}</h1>

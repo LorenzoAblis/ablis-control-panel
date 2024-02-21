@@ -10,8 +10,6 @@ export const Inventory = () => {
   const [itemToExpand, setItemToExpand] = useState({});
   const [showExpandedView, setShowExpandedView] = useState(false);
 
-  // TODO: Handle Expanded View
-
   const fetchItems = () => {
     const itemsRef = ref(db, "inventory");
     onValue(itemsRef, (snapshot) => {
@@ -40,10 +38,9 @@ export const Inventory = () => {
         {items.map((item) => (
           <Card key={item.name} onClick={() => handleExpand(item)}>
             <Card.Body>
-              <Card.Title>
-                {item.name} ({item.quantity})
-              </Card.Title>
-              <Card.Subtitle>{item.location}</Card.Subtitle>
+              <Card.Title className="fw-bold fs-3">{item.name}</Card.Title>
+              <Card.Subtitle className="mb-2">{item.location}</Card.Subtitle>
+              <Card.Text className="mb-0">Qty: {item.quantity || 0}</Card.Text>
               <Card.Text>Exp: {item.expirationDate}</Card.Text>
             </Card.Body>
           </Card>

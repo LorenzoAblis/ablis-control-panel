@@ -22,7 +22,7 @@ const AddItemModal = (props) => {
     if (newItem.name) {
       await set(ref(db, "shopping_items/" + newItem.name), {
         name: newItem.name,
-        quantity: newItem.quantity || "",
+        quantity: Number(newItem.quantity) || 0,
         location: newItem.location || "",
         description: newItem.description || "",
         completed: false,
@@ -90,51 +90,62 @@ const AddItemModal = (props) => {
           </Dropdown>
 
           <Form>
-            <Form.Group md="4" controlId="validationCustomUsername">
+            <Form.Group md="4" className="d-flex gap-1 flex-column">
               <InputGroup hasValidation>
                 <InputGroup.Text>Item Name</InputGroup.Text>
-                <Form.Control type="text" placeholder="" required />
+                <Form.Control
+                  type="text"
+                  name="name"
+                  value={newItem.name}
+                  onChange={handleChange}
+                  required
+                />
                 <Form.Control.Feedback type="invalid">
-                  Please choose a username.
+                  Please type a name.
                 </Form.Control.Feedback>
               </InputGroup>
+              <InputGroup>
+                <InputGroup.Text>Amount</InputGroup.Text>
+                <Form.Control
+                  type="number"
+                  name="quantity"
+                  value={newItem.quantity}
+                  onChange={handleChange}
+                />
+              </InputGroup>
+              <InputGroup>
+                <InputGroup.Text>Location</InputGroup.Text>
+                <Form.Control
+                  type="text"
+                  name="location"
+                  value={newItem.location}
+                  onChange={handleChange}
+                />
+              </InputGroup>
+              <InputGroup>
+                <InputGroup.Text>Description</InputGroup.Text>
+                <Form.Control
+                  type="text"
+                  name="description"
+                  value={newItem.description}
+                  onChange={handleChange}
+                />
+              </InputGroup>
             </Form.Group>
+            {/* <Button variant="primary" type="button" onClick={handleSubmit}>
+              wdwd
+            </Button> */}
           </Form>
-
-          <input
-            type="text"
-            placeholder="Item Name"
-            name="name"
-            value={newItem.name}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            placeholder="Amount"
-            name="quantity"
-            value={newItem.quantity}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            placeholder="Location"
-            name="location"
-            value={newItem.location}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            placeholder="Description"
-            name="description"
-            value={newItem.description}
-            onChange={handleChange}
-          />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="success" onClick={handleAdd}>
+          <Button
+            variant="success"
+            onClick={handleAdd}
+            disabled={!newItem.name}
+          >
             Add Item
           </Button>
         </Modal.Footer>

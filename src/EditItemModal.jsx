@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 
 const EditItemModal = (props) => {
   const {
@@ -24,10 +26,22 @@ const EditItemModal = (props) => {
     if (item.name) {
       if (editType === "inventory") {
         await remove(ref(db, "inventory/" + item.name));
-        await set(ref(db, "inventory/" + edittedItem.name), edittedItem);
+        await set(ref(db, "inventory/" + edittedItem.name), {
+          name: edittedItem.name,
+          quantity: Number(edittedItem.quantity) || 0,
+          location: edittedItem.location || "",
+          description: edittedItem.description || "",
+          completed: false,
+        });
       } else if (editType === "shopping") {
         await remove(ref(db, "shopping_items/" + item.name));
-        await set(ref(db, "shopping_items/" + edittedItem.name), edittedItem);
+        await set(ref(db, "shopping_items/" + edittedItem.name), {
+          name: edittedItem.name,
+          quantity: Number(edittedItem.quantity) || 0,
+          location: edittedItem.location || "",
+          description: edittedItem.description || "",
+          completed: false,
+        });
       }
     }
 
@@ -51,6 +65,7 @@ const EditItemModal = (props) => {
 
     toast.success(`Deleted ${item.name}`);
     setShowEditItemModal(false);
+    setShowExpandedView(false);
   };
 
   const handleChange = (e) => {
@@ -68,34 +83,50 @@ const EditItemModal = (props) => {
           <Modal.Title>{item.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input
-            type="text"
-            placeholder="Item Name"
-            name="name"
-            value={edittedItem.name}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            placeholder="Quantity"
-            name="quantity"
-            value={edittedItem.quantity}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            placeholder="Location"
-            name="location"
-            value={edittedItem.location}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            placeholder="Description"
-            name="description"
-            value={edittedItem.description}
-            onChange={handleChange}
-          />
+          <Form>
+            <Form.Group md="4" className="d-flex gap-1 flex-column">
+              <InputGroup hasValidation>
+                <InputGroup.Text>Item Name</InputGroup.Text>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  value={edittedItem.name}
+                  onChange={handleChange}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please type a name.
+                </Form.Control.Feedback>
+              </InputGroup>
+              <InputGroup>
+                <InputGroup.Text>Amount</InputGroup.Text>
+                <Form.Control
+                  type="number"
+                  name="quantity"
+                  value={edittedItem.quantity}
+                  onChange={handleChange}
+                />
+              </InputGroup>
+              <InputGroup>
+                <InputGroup.Text>Location</InputGroup.Text>
+                <Form.Control
+                  type="text"
+                  name="location"
+                  value={edittedItem.location}
+                  onChange={handleChange}
+                />
+              </InputGroup>
+              <InputGroup>
+                <InputGroup.Text>Description</InputGroup.Text>
+                <Form.Control
+                  type="text"
+                  name="description"
+                  value={edittedItem.description}
+                  onChange={handleChange}
+                />
+              </InputGroup>
+            </Form.Group>
+          </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={handleDelete}>
@@ -104,7 +135,11 @@ const EditItemModal = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleEdit}>
+          <Button
+            variant="primary"
+            onClick={handleEdit}
+            disabled={!edittedItem.name}
+          >
             Save Changes
           </Button>
         </Modal.Footer>
