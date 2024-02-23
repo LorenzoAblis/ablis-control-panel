@@ -39,6 +39,9 @@ const ExpandedItemModal = (props) => {
             Last Bought: <span className="fw-bold">{item.timestamp}</span>
           </p>
           <p>
+            Store: <span className="fw-bold">{item.store}</span>
+          </p>
+          <p>
             Expiration Date:{" "}
             <span className="fw-bold">{item.expirationDate}</span>
           </p>

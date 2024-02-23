@@ -26,7 +26,7 @@ const AddItemModal = (props) => {
       await set(ref(db, "shopping_items/" + newItem.name), {
         name: newItem.name,
         quantity: Number(newItem.quantity) || 0,
-        location: newItem.location || "",
+        store: newItem.store || "",
         description: newItem.description || "",
         completed: false,
       });
@@ -47,7 +47,7 @@ const AddItemModal = (props) => {
     setNewItem((prev) => ({
       ...prev,
       name: item.name,
-      location: item.location,
+      store: item.store,
     }));
   };
 
@@ -117,11 +117,11 @@ const AddItemModal = (props) => {
                 />
               </InputGroup>
               <InputGroup>
-                <InputGroup.Text>Location</InputGroup.Text>
+                <InputGroup.Text>Store</InputGroup.Text>
                 <Form.Control
                   type="text"
-                  name="location"
-                  value={newItem.location}
+                  name="store"
+                  value={newItem.store}
                   onChange={handleChange}
                 />
               </InputGroup>

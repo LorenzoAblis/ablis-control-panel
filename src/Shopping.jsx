@@ -43,7 +43,7 @@ const Shopping = () => {
     await set(ref(db, "shopping_items/" + item.name), {
       name: item.name,
       quantity: Number(item.quantity),
-      location: item.location,
+      store: item.store,
       description: item.description,
       completed: true,
     });
@@ -61,27 +61,25 @@ const Shopping = () => {
       <button onClick={() => setShowCartModal(true)}>Cart</button>
       <button onClick={() => navigate("/inventory")}>Inventory</button>
 
-      <section className="d-flex flex-column gap-4 pb-3">
+      <section className="d-flex flex-column gap-4 pb-3 mt-3">
         {common_stores.map((store) => (
           <section key={store.name}>
             <h1 className="fs-1 fw-normal pb-2">{store}</h1>
-            {items.filter((item) => item.location == store && !item.completed)
+            {items.filter((item) => item.store == store && !item.completed)
               .length == 0 && (
               <div className="d-flex justify-content-center">
                 <h4 className="text-secondary">No items</h4>
               </div>
             )}
             {items
-              .filter((item) => item.location === store && !item.completed)
+              .filter((item) => item.store === store && !item.completed)
               .map((item, index) => (
                 <div key={index} className="d-flex gap-2 pb-3">
                   <Button
                     variant="outline-secondary"
-                    className="h-50"
+                    className="complete-button"
                     onClick={() => handleComplete(item)}
-                  >
-                    <i className="bi bi-check-lg"></i>
-                  </Button>
+                  />
                   <div>
                     <div className="d-flex flex-row gap-3">
                       <h2 className="fw-bold">{item.name}</h2>
@@ -113,7 +111,7 @@ const Shopping = () => {
       <section>
         <h1 className="fs-1 fw-normal pb-2">Other</h1>
         {items.filter(
-          (item) => !common_stores.includes(item.location) && !item.completed
+          (item) => !common_stores.includes(item.store) && !item.completed,
         ).length == 0 && (
           <div className="d-flex justify-content-center">
             <h4 className="text-secondary">No items</h4>
@@ -121,7 +119,7 @@ const Shopping = () => {
         )}
         {items
           .filter(
-            (item) => !common_stores.includes(item.location) && !item.completed
+            (item) => !common_stores.includes(item.store) && !item.completed,
           )
           .map((item, index) => (
             <div key={index} className="d-flex gap-2 pb-3">
@@ -144,7 +142,7 @@ const Shopping = () => {
                     Amount: <span className="fw-bold">{item.quantity}</span>
                   </p>
                   <p className="mb-0">
-                    Location: <span className="fw-bold">{item.location}</span>
+                    Store: <span className="fw-bold">{item.store}</span>
                   </p>
                   {item.description !== "" && (
                     <p>

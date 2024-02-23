@@ -32,6 +32,7 @@ const EditItemModal = (props) => {
           location: edittedItem.location || "",
           category: edittedItem.category || "",
           timestamp: edittedItem.timestamp || "",
+          store: edittedItem.store || "",
           expirationDate: edittedItem.expirationDate || "",
           notes: edittedItem.notes || "",
         });
@@ -40,7 +41,7 @@ const EditItemModal = (props) => {
         await set(ref(db, "shopping_items/" + edittedItem.name), {
           name: edittedItem.name,
           quantity: Number(edittedItem.quantity) || 0,
-          location: edittedItem.location || "",
+          store: edittedItem.store || "",
           description: edittedItem.description || "",
           completed: false,
         });
@@ -111,11 +112,11 @@ const EditItemModal = (props) => {
                   />
                 </InputGroup>
                 <InputGroup>
-                  <InputGroup.Text>Location</InputGroup.Text>
+                  <InputGroup.Text>Store</InputGroup.Text>
                   <Form.Control
                     type="text"
-                    name="location"
-                    value={edittedItem.location}
+                    name="store"
+                    value={edittedItem.store}
                     onChange={handleChange}
                   />
                 </InputGroup>
@@ -183,6 +184,15 @@ const EditItemModal = (props) => {
                       type="text"
                       name="timestamp"
                       value={edittedItem.timestamp}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                  <InputGroup>
+                    <InputGroup.Text>Store</InputGroup.Text>
+                    <Form.Control
+                      type="text"
+                      name="store"
+                      value={edittedItem.store}
                       onChange={handleChange}
                     />
                   </InputGroup>

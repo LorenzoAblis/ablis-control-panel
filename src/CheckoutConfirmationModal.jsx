@@ -43,8 +43,9 @@ const CheckoutConfirmationModal = (props) => {
             await set(ref(db, "inventory/" + item.name), {
               name: item.name,
               quantity: item.quantity,
-              location: item.location,
+              location: "",
               timestamp: formattedDate,
+              store: item.store,
               category: "", // Electronics, Food, etc
               expirationDate: "", // Blank expiration date
               notes: "", // Notes

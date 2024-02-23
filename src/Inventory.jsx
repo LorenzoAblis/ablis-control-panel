@@ -46,7 +46,9 @@ export const Inventory = () => {
             <Card key={item.name} onClick={() => handleExpand(item)}>
               <Card.Body>
                 <Card.Title className="fw-bold fs-3">{item.name}</Card.Title>
-                <Card.Subtitle className="mb-2">{item.location}</Card.Subtitle>
+                <Card.Subtitle className="mb-2 fw-semibold">
+                  {item.location}
+                </Card.Subtitle>
                 <Card.Text className="mb-0">
                   Qty: {item.quantity || 0}
                 </Card.Text>
