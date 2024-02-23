@@ -16,7 +16,10 @@ const AddItemModal = (props) => {
   const [newItem, setNewItem] = useState({});
   const [inventoryItems, setInventoryItems] = useState([]);
 
-  const handleClose = () => setShowAddItemModal(false);
+  const handleClose = () => {
+    setShowAddItemModal(false);
+    setNewItem({});
+  };
 
   const handleAdd = async () => {
     if (newItem.name) {
@@ -132,9 +135,6 @@ const AddItemModal = (props) => {
                 />
               </InputGroup>
             </Form.Group>
-            {/* <Button variant="primary" type="button" onClick={handleSubmit}>
-              wdwd
-            </Button> */}
           </Form>
         </Modal.Body>
         <Modal.Footer>

@@ -30,8 +30,10 @@ const EditItemModal = (props) => {
           name: edittedItem.name,
           quantity: Number(edittedItem.quantity) || 0,
           location: edittedItem.location || "",
-          description: edittedItem.description || "",
-          completed: false,
+          category: edittedItem.category || "",
+          timestamp: edittedItem.timestamp || "",
+          expirationDate: edittedItem.expirationDate || "",
+          notes: edittedItem.notes || "",
         });
       } else if (editType === "shopping") {
         await remove(ref(db, "shopping_items/" + item.name));
@@ -80,52 +82,132 @@ const EditItemModal = (props) => {
     <>
       <Modal show={showEditItemModal} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>{item.name}</Modal.Title>
+          <Modal.Title className="fs-1">{item.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group md="4" className="d-flex gap-1 flex-column">
-              <InputGroup hasValidation>
-                <InputGroup.Text>Item Name</InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  value={edittedItem.name}
-                  onChange={handleChange}
-                  required
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please type a name.
-                </Form.Control.Feedback>
-              </InputGroup>
-              <InputGroup>
-                <InputGroup.Text>Amount</InputGroup.Text>
-                <Form.Control
-                  type="number"
-                  name="quantity"
-                  value={edittedItem.quantity}
-                  onChange={handleChange}
-                />
-              </InputGroup>
-              <InputGroup>
-                <InputGroup.Text>Location</InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  name="location"
-                  value={edittedItem.location}
-                  onChange={handleChange}
-                />
-              </InputGroup>
-              <InputGroup>
-                <InputGroup.Text>Description</InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  name="description"
-                  value={edittedItem.description}
-                  onChange={handleChange}
-                />
-              </InputGroup>
-            </Form.Group>
+            {editType === "shopping" && (
+              <Form.Group md="4" className="d-flex gap-1 flex-column">
+                <InputGroup hasValidation>
+                  <InputGroup.Text>Item Name</InputGroup.Text>
+                  <Form.Control
+                    type="text"
+                    name="name"
+                    value={edittedItem.name}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please type a name.
+                  </Form.Control.Feedback>
+                </InputGroup>
+                <InputGroup>
+                  <InputGroup.Text>Amount</InputGroup.Text>
+                  <Form.Control
+                    type="number"
+                    name="quantity"
+                    value={edittedItem.quantity}
+                    onChange={handleChange}
+                  />
+                </InputGroup>
+                <InputGroup>
+                  <InputGroup.Text>Location</InputGroup.Text>
+                  <Form.Control
+                    type="text"
+                    name="location"
+                    value={edittedItem.location}
+                    onChange={handleChange}
+                  />
+                </InputGroup>
+                <InputGroup>
+                  <InputGroup.Text>Description</InputGroup.Text>
+                  <Form.Control
+                    type="text"
+                    name="description"
+                    value={edittedItem.description}
+                    onChange={handleChange}
+                  />
+                </InputGroup>
+              </Form.Group>
+            )}
+            {editType === "inventory" && (
+              <>
+                <Form.Group md="4" className="d-flex gap-1 flex-column mb-4">
+                  <InputGroup hasValidation>
+                    <InputGroup.Text>Item Name</InputGroup.Text>
+                    <Form.Control
+                      type="text"
+                      name="name"
+                      value={edittedItem.name}
+                      onChange={handleChange}
+                      required
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please type a name.
+                    </Form.Control.Feedback>
+                  </InputGroup>
+                  <InputGroup>
+                    <InputGroup.Text>Amount</InputGroup.Text>
+                    <Form.Control
+                      type="number"
+                      name="quantity"
+                      value={edittedItem.quantity}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                  <InputGroup>
+                    <InputGroup.Text>Location</InputGroup.Text>
+                    <Form.Control
+                      type="text"
+                      name="location"
+                      value={edittedItem.location}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                </Form.Group>
+
+                <h6 className="mb-1">Info</h6>
+                <Form.Group md="4" className="d-flex gap-1 flex-column">
+                  <InputGroup>
+                    <InputGroup.Text>Category</InputGroup.Text>
+                    <Form.Control
+                      type="text"
+                      name="category"
+                      value={edittedItem.category}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                  <InputGroup>
+                    <InputGroup.Text>Last Bought</InputGroup.Text>
+                    <Form.Control
+                      type="text"
+                      name="timestamp"
+                      value={edittedItem.timestamp}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                  <InputGroup>
+                    <InputGroup.Text>Expiration Date</InputGroup.Text>
+                    <Form.Control
+                      type="text"
+                      name="expirationDate"
+                      value={edittedItem.expirationDate}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                  <InputGroup>
+                    <InputGroup.Text>Notes</InputGroup.Text>
+                    <Form.Control
+                      as="textarea"
+                      type="text"
+                      name="notes"
+                      value={edittedItem.notes}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                </Form.Group>
+              </>
+            )}
           </Form>
         </Modal.Body>
         <Modal.Footer>
