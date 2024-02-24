@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { db } from "../firebaseConfig";
-import { ref, set, remove } from "firebase/database";
-import toast from "react-hot-toast";
-
-// TODO: Add specific fields to be editable
+// import { db } from "../firebaseConfig";
+// import { ref, set, remove } from "firebase/database";
+// import toast from "react-hot-toast";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";

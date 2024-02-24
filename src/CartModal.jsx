@@ -35,7 +35,7 @@ const CartModal = (props) => {
     await set(ref(db, "shopping_items/" + item.name), {
       name: item.name,
       quantity: item.quantity,
-      location: item.location,
+      store: item.store,
       description: item.description,
       completed: false,
     });
@@ -57,7 +57,7 @@ const CartModal = (props) => {
             .filter((item) => item.completed)
             .map((item, index) => (
               <div className="d-flex gap-2 p-1" key={item.name}>
-                <h2>{item.name}</h2>
+                <h2 className="fw-bold">{item.name}</h2>
                 <Button
                   variant="secondary"
                   onClick={() => handleUncomplete(item)}

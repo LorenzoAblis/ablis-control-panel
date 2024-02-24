@@ -57,7 +57,7 @@ const Shopping = () => {
 
   return (
     <>
-      <button onClick={() => setShowAddItemModal(true)}>Add Items</button>
+      <button onClick={() => setShowAddItemModal(true)}>Add Item</button>
       <button onClick={() => setShowCartModal(true)}>Cart</button>
       <button onClick={() => navigate("/inventory")}>Inventory</button>
 
@@ -111,7 +111,7 @@ const Shopping = () => {
       <section>
         <h1 className="fs-1 fw-normal pb-2">Other</h1>
         {items.filter(
-          (item) => !common_stores.includes(item.store) && !item.completed,
+          (item) => !common_stores.includes(item.store) && !item.completed
         ).length == 0 && (
           <div className="d-flex justify-content-center">
             <h4 className="text-secondary">No items</h4>
@@ -119,17 +119,15 @@ const Shopping = () => {
         )}
         {items
           .filter(
-            (item) => !common_stores.includes(item.store) && !item.completed,
+            (item) => !common_stores.includes(item.store) && !item.completed
           )
           .map((item, index) => (
             <div key={index} className="d-flex gap-2 pb-3">
               <Button
                 variant="outline-secondary"
-                className="h-50"
+                className="complete-button"
                 onClick={() => handleComplete(item)}
-              >
-                <i className="bi bi-check-lg"></i>
-              </Button>
+              />
               <div>
                 <div className="d-flex flex-row gap-3">
                   <h2 className="fw-bold">{item.name}</h2>
@@ -165,6 +163,7 @@ const Shopping = () => {
       <AddItemModal
         showAddItemModal={showAddItemModal}
         setShowAddItemModal={setShowAddItemModal}
+        addType="shopping"
       />
 
       <EditItemModal
