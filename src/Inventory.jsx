@@ -8,14 +8,16 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import AddItemModal from "./AddItemModal";
 import ExpandedItemModal from "./ExpandedItem";
+import TakeModal from "./TakeModal";
 
 export const Inventory = () => {
   const navigate = useNavigate();
 
   const [items, setItems] = useState([]);
-  const [itemToExpand, setItemToExpand] = useState({});
+  const [selectedItem, setSelectedItem] = useState({});
   const [showExpandedView, setShowExpandedView] = useState(false);
   const [showAddItemModal, setShowAddItemModal] = useState(false);
+  const [showTakeModal, setShowTakeModal] = useState(false);
 
   const fetchItems = () => {
     const itemsRef = ref(db, "inventory");
@@ -31,8 +33,13 @@ export const Inventory = () => {
   };
 
   const handleExpand = (item) => {
-    setItemToExpand(item);
+    setSelectedItem(item);
     setShowExpandedView(true);
+  };
+
+  const handleTake = (item) => {
+    setSelectedItem(item);
+    setShowTakeModal(true);
   };
 
   useEffect(() => {
@@ -64,9 +71,14 @@ export const Inventory = () => {
                   <span className="fw-semibold">{item.expirationDate}</span>
                 </Card.Text>
               </Card.Body>
-              <Button variant="primary" onClick={() => handleExpand(item)}>
-                Viewh
-              </Button>
+              <ButtonGroup>
+                <Button variant="primary" onClick={() => handleExpand(item)}>
+                  View
+                </Button>
+                <Button variant="success" onClick={() => handleTake(item)}>
+                  Take
+                </Button>
+              </ButtonGroup>
             </Card>
           ))}
         </section>
@@ -79,9 +91,15 @@ export const Inventory = () => {
       />
 
       <ExpandedItemModal
-        item={itemToExpand}
+        item={selectedItem}
         showExpandedView={showExpandedView}
         setShowExpandedView={setShowExpandedView}
+      />
+
+      <TakeModal
+        item={selectedItem}
+        showTakeModal={showTakeModal}
+        setShowTakeModal={setShowTakeModal}
       />
     </>
   );
