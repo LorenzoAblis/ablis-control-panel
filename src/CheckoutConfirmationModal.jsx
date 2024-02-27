@@ -48,6 +48,7 @@ const CheckoutConfirmationModal = (props) => {
               store: item.store,
               category: "", // Electronics, Food, etc
               expirationDate: "", // Blank expiration date
+              minimum: 0,
               notes: "", // Notes
             });
           }

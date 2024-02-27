@@ -44,6 +44,9 @@ const ExpandedItemModal = (props) => {
             <span className="fw-bold">{item.expirationDate}</span>
           </p>
           <p>
+            Minimum: <span className="fw-bold">{item.minimum}</span>
+          </p>
+          <p>
             Notes: <span className="fw-bold">{item.notes}</span>
           </p>
         </Modal.Body>

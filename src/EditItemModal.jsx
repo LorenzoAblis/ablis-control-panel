@@ -34,6 +34,7 @@ const EditItemModal = (props) => {
           timestamp: edittedItem.timestamp || "",
           store: edittedItem.store || "",
           expirationDate: edittedItem.expirationDate || "",
+          minimum: Number(edittedItem.minimum) || 0,
           notes: edittedItem.notes || "",
         });
       } else if (editType === "shopping") {
@@ -202,6 +203,15 @@ const EditItemModal = (props) => {
                       type="text"
                       name="expirationDate"
                       value={edittedItem.expirationDate}
+                      onChange={handleChange}
+                    />
+                  </InputGroup>
+                  <InputGroup>
+                    <InputGroup.Text>Minimum</InputGroup.Text>
+                    <Form.Control
+                      type="text"
+                      name="minimum"
+                      value={edittedItem.minimum}
                       onChange={handleChange}
                     />
                   </InputGroup>

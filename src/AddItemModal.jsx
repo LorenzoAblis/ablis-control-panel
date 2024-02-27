@@ -34,6 +34,7 @@ const AddItemModal = (props) => {
           timestamp: newItem.timestamp || "",
           store: newItem.store || "",
           expirationDate: newItem.expirationDate || "",
+          minimum: newItem.minimum || 0,
           notes: newItem.notes || "",
         });
       } else if (addType === "shopping") {
@@ -248,6 +249,15 @@ const AddItemModal = (props) => {
                     type="text"
                     name="expirationDate"
                     value={newItem.expirationDate}
+                    onChange={handleChange}
+                  />
+                </InputGroup>
+                <InputGroup>
+                  <InputGroup.Text>Minimum</InputGroup.Text>
+                  <Form.Control
+                    type="number"
+                    name="minimum"
+                    value={newItem.minimum}
                     onChange={handleChange}
                   />
                 </InputGroup>

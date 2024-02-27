@@ -50,16 +50,21 @@ export const Inventory = () => {
     <>
       <main>
         <button className="mb-3" onClick={() => setShowAddItemModal(true)}>
-          Add item
+          Add Item
         </button>
         <button className="mb-3" onClick={() => navigate("/shopping")}>
           Shopping
         </button>
-        <section className="d-flex flex-column gap-1">
+        <section className="d-flex flex-column gap-2">
           {items.map((item) => (
             <Card key={item.name}>
               <Card.Body>
-                <Card.Title className="fw-bold fs-3">{item.name}</Card.Title>
+                <Card.Title className="fw-bold fs-3">
+                  {item.name}
+                  {item.quantity <= item.minimum && (
+                    <span className="text-danger fw-semibold"> (Low)</span>
+                  )}
+                </Card.Title>
                 <Card.Subtitle className="mb-2 fw-semibold">
                   {item.location}
                 </Card.Subtitle>
