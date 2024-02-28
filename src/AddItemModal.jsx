@@ -95,7 +95,11 @@ const AddItemModal = (props) => {
     <>
       <Modal show={showAddItemModal} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Item</Modal.Title>
+          <Modal.Title>
+            {addType === "shopping"
+              ? "Add to shopping list"
+              : "Add to inventory"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {addType === "shopping" && (

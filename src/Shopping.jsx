@@ -57,9 +57,25 @@ const Shopping = () => {
 
   return (
     <>
-      <button onClick={() => setShowAddItemModal(true)}>Add Item</button>
-      <button onClick={() => setShowCartModal(true)}>Cart</button>
-      <button onClick={() => navigate("/inventory")}>Inventory</button>
+      <div className="mb-2">
+        <Button
+          variant="success"
+          onClick={() => setShowAddItemModal(true)}
+          style={{ marginRight: "0.5rem" }}
+        >
+          <i className="bi bi-plus-lg"></i>
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => setShowCartModal(true)}
+          style={{ marginRight: "0.5rem" }}
+        >
+          <i className="bi bi-basket-fill"></i>
+        </Button>
+        <Button variant="secondary" onClick={() => navigate("/inventory")}>
+          <i className="bi bi-inboxes-fill"></i>
+        </Button>
+      </div>
 
       <section className="d-flex flex-column gap-4 pb-3 mt-3">
         {common_stores.map((store) => (

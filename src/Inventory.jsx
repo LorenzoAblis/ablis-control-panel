@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
-import { ref, onValue, set } from "firebase/database";
+import { ref, onValue } from "firebase/database";
 
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Dropdown from "react-bootstrap/Dropdown";
 import AddItemModal from "./AddItemModal";
 import ExpandedItemModal from "./ExpandedItem";
 import TakeModal from "./TakeModal";
@@ -21,6 +22,10 @@ export const Inventory = () => {
   const [showAddItemModal, setShowAddItemModal] = useState(false);
   const [showTakeModal, setShowTakeModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [filterQuery, setFilterQuery] = useState("");
+  const [addType, setAddType] = useState("");
+
+  let filters = ["name", "store", "category", "location"];
 
   const fetchItems = () => {
     const itemsRef = ref(db, "inventory");
@@ -33,6 +38,16 @@ export const Inventory = () => {
         setItems([]);
       }
     });
+  };
+
+  const handleInventoryAdd = () => {
+    setShowAddItemModal(true);
+    setAddType("inventory");
+  };
+
+  const handleShoppingAdd = () => {
+    setShowAddItemModal(true);
+    setAddType("shopping");
   };
 
   const handleExpand = (item) => {
@@ -52,12 +67,25 @@ export const Inventory = () => {
   return (
     <>
       <main>
-        <button className="mb-3" onClick={() => setShowAddItemModal(true)}>
-          Add Item
-        </button>
-        <button className="mb-3" onClick={() => navigate("/shopping")}>
-          Shopping
-        </button>
+        <div className="mb-2">
+          <Button
+            variant="success"
+            onClick={handleInventoryAdd}
+            style={{ marginRight: "0.5rem" }}
+          >
+            <i className="bi bi-plus-lg"></i>
+          </Button>
+          <Button
+            variant="primary"
+            onClick={handleShoppingAdd}
+            style={{ marginRight: "0.5rem" }}
+          >
+            <i className="bi bi-cart-plus-fill"></i>
+          </Button>
+          <Button variant="secondary" onClick={() => navigate("/shopping")}>
+            <i className="bi bi-basket-fill"></i>
+          </Button>
+        </div>
         <section className="d-flex flex-column gap-2">
           <InputGroup>
             <Form.Control
@@ -67,13 +95,31 @@ export const Inventory = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <Button variant="secondary">
-              <i className="bi bi-funnel-fill"></i>
-            </Button>
+            <Dropdown className="mb-3">
+              <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                <i className="bi bi-funnel-fill"></i>
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {filters.map((filter) => (
+                  <Dropdown.Item
+                    key={filter}
+                    active={filterQuery === filter}
+                    onClick={() => setFilterQuery(filter)}
+                  >
+                    {filter}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
           </InputGroup>
           {items
             .filter((item) =>
-              searchQuery ? item.name.includes(searchQuery) : true,
+              searchQuery
+                ? item[filterQuery]
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase())
+                : true
             )
 
             .map((item) => (
@@ -113,7 +159,7 @@ export const Inventory = () => {
       <AddItemModal
         showAddItemModal={showAddItemModal}
         setShowAddItemModal={setShowAddItemModal}
-        addType="inventory"
+        addType={addType}
       />
 
       <ExpandedItemModal

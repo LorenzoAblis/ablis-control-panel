@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import Dropdown from "react-bootstrap/Dropdown";
 import InputGroup from "react-bootstrap/InputGroup";
 
 const EditItemModal = (props) => {
@@ -19,6 +20,8 @@ const EditItemModal = (props) => {
   } = props;
 
   const [edittedItem, setEdittedItem] = useState({ name: item.name });
+
+  let categories = ["Food", "Beverages", "Cleaning", "Health", "Electronics"];
 
   const handleClose = () => setShowEditItemModal(false);
 
@@ -74,6 +77,13 @@ const EditItemModal = (props) => {
 
   const handleChange = (e) => {
     setEdittedItem((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleDropdownClick = (item) => {
+    setEdittedItem((prev) => ({
+      ...prev,
+      category: item,
+    }));
   };
 
   useEffect(() => {
@@ -172,12 +182,22 @@ const EditItemModal = (props) => {
                 <Form.Group md="4" className="d-flex gap-1 flex-column">
                   <InputGroup>
                     <InputGroup.Text>Category</InputGroup.Text>
-                    <Form.Control
-                      type="text"
-                      name="category"
-                      value={edittedItem.category}
-                      onChange={handleChange}
-                    />
+                    <Dropdown className="mb-3">
+                      <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                        {edittedItem.category}
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        {categories.map((category, index) => (
+                          <Dropdown.Item
+                            key={category}
+                            onClick={() => handleDropdownClick(category)}
+                          >
+                            {category}
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </InputGroup>
                   <InputGroup>
                     <InputGroup.Text>Last Bought</InputGroup.Text>
