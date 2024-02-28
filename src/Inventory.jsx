@@ -22,7 +22,7 @@ export const Inventory = () => {
   const [showAddItemModal, setShowAddItemModal] = useState(false);
   const [showTakeModal, setShowTakeModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filterQuery, setFilterQuery] = useState("");
+  const [filterQuery, setFilterQuery] = useState("name");
   const [addType, setAddType] = useState("");
 
   let filters = ["name", "store", "category", "location"];
@@ -119,11 +119,11 @@ export const Inventory = () => {
                 ? item[filterQuery]
                     .toLowerCase()
                     .includes(searchQuery.toLowerCase())
-                : true
+                : true,
             )
 
             .map((item) => (
-              <Card key={item.name}>
+              <Card key={item.name} className="shadow mb-2 p-1">
                 <Card.Body>
                   <Card.Title className="fw-bold fs-3">
                     {item.name}
