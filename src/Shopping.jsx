@@ -5,6 +5,7 @@ import { ref, set, onValue } from "firebase/database";
 import toast from "react-hot-toast";
 
 import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 import CartModal from "./CartModal";
 import EditItemModal from "./EditItemModal";
 import AddItemModal from "./AddItemModal";
@@ -77,98 +78,105 @@ const Shopping = () => {
         </Button>
       </div>
 
-      <section className="d-flex flex-column gap-4 pb-3 mt-3">
+      <section className="d-flex flex-column gap-4 pb-4 mt-3">
         {common_stores.map((store) => (
-          <section key={store.name}>
-            <h1 className="fs-1 fw-normal pb-2">{store}</h1>
-            {items.filter((item) => item.store == store && !item.completed)
-              .length == 0 && (
-              <div className="d-flex justify-content-center">
-                <h4 className="text-secondary">No items</h4>
-              </div>
-            )}
-            {items
-              .filter((item) => item.store === store && !item.completed)
-              .map((item, index) => (
-                <div key={index} className="d-flex gap-2 pb-3">
-                  <Button
-                    variant="outline-secondary"
-                    className="complete-button"
-                    onClick={() => handleComplete(item)}
-                  />
-                  <div>
-                    <div className="d-flex flex-row gap-3">
-                      <h2 className="fw-bold">{item.name}</h2>
-                      <Button
-                        variant="success"
-                        onClick={() => handleEdit(item)}
-                      >
-                        <i className="bi bi-pencil-square"></i>
-                      </Button>
-                    </div>
-                    <section className="d-flex flex-column">
-                      <p className="mb-0">
-                        Amount: <span className="fw-bold">{item.quantity}</span>
-                      </p>
-                      {item.description !== "" && (
-                        <p>
-                          Description:{" "}
-                          <span className="fw-bold">{item.description}</span>
-                        </p>
-                      )}
-                    </section>
-                  </div>
+          <Card key={store.name} className="shadow">
+            <Card.Body>
+              <Card.Title className="fs-1 fw-normal mb-4 fw-bold">
+                {store}
+              </Card.Title>
+              {items.filter((item) => item.store == store && !item.completed)
+                .length == 0 && (
+                <div className="d-flex justify-content-center">
+                  <h4 className="text-secondary">No items</h4>
                 </div>
-              ))}
-          </section>
+              )}
+              {items
+                .filter((item) => item.store === store && !item.completed)
+                .map((item, index) => (
+                  <div key={index} className="d-flex gap-2 pb-3">
+                    <Button
+                      variant="outline-secondary"
+                      className="complete-button"
+                      onClick={() => handleComplete(item)}
+                    />
+                    <div>
+                      <div className="d-flex flex-row gap-3">
+                        <h3 className="fw-bold">{item.name}</h3>
+                        <Button
+                          variant="success"
+                          onClick={() => handleEdit(item)}
+                        >
+                          <i className="bi bi-pencil-square"></i>
+                        </Button>
+                      </div>
+                      <section className="d-flex flex-column">
+                        <p className="mb-0">
+                          Amount:{" "}
+                          <span className="fw-bold">{item.quantity}</span>
+                        </p>
+                        {item.description !== "" && (
+                          <p>
+                            Description:{" "}
+                            <span className="fw-bold">{item.description}</span>
+                          </p>
+                        )}
+                      </section>
+                    </div>
+                  </div>
+                ))}
+            </Card.Body>
+          </Card>
         ))}
       </section>
 
-      <section>
-        <h1 className="fs-1 fw-normal pb-2">Other</h1>
-        {items.filter(
-          (item) => !common_stores.includes(item.store) && !item.completed
-        ).length == 0 && (
-          <div className="d-flex justify-content-center">
-            <h4 className="text-secondary">No items</h4>
-          </div>
-        )}
-        {items
-          .filter(
+      <Card className="shadow">
+        <Card.Body>
+          <Card.Title className="fs-1 fw-normal mb-4 fw-bold">Other</Card.Title>
+          {items.filter(
             (item) => !common_stores.includes(item.store) && !item.completed
-          )
-          .map((item, index) => (
-            <div key={index} className="d-flex gap-2 pb-3">
-              <Button
-                variant="outline-secondary"
-                className="complete-button"
-                onClick={() => handleComplete(item)}
-              />
-              <div>
-                <div className="d-flex flex-row gap-3">
-                  <h2 className="fw-bold">{item.name}</h2>
-                  <Button variant="success" onClick={() => handleEdit(item)}>
-                    <i className="bi bi-pencil-square"></i>
-                  </Button>
-                </div>
-                <section className="d-flex flex-column">
-                  <p className="mb-0">
-                    Amount: <span className="fw-bold">{item.quantity}</span>
-                  </p>
-                  <p className="mb-0">
-                    Store: <span className="fw-bold">{item.store}</span>
-                  </p>
-                  {item.description !== "" && (
-                    <p>
-                      Description:{" "}
-                      <span className="fw-bold">{item.description}</span>
-                    </p>
-                  )}
-                </section>
-              </div>
+          ).length == 0 && (
+            <div className="d-flex justify-content-center">
+              <h4 className="text-secondary">No items</h4>
             </div>
-          ))}
-      </section>
+          )}
+          {items
+            .filter(
+              (item) => !common_stores.includes(item.store) && !item.completed
+            )
+            .map((item, index) => (
+              <div key={index} className="d-flex gap-2 pb-3">
+                <Button
+                  variant="outline-secondary"
+                  className="complete-button"
+                  onClick={() => handleComplete(item)}
+                />
+                <div>
+                  <div className="d-flex flex-row gap-3">
+                    <h2 className="fw-bold">{item.name}</h2>
+                    <Button variant="success" onClick={() => handleEdit(item)}>
+                      <i className="bi bi-pencil-square"></i>
+                    </Button>
+                  </div>
+                  <section className="d-flex flex-column">
+                    <p className="mb-0">
+                      Amount: <span className="fw-bold">{item.quantity}</span>
+                    </p>
+                    <p className="mb-0">
+                      Store: <span className="fw-bold">{item.store}</span>
+                    </p>
+                    {item.description !== "" && (
+                      <p>
+                        Description:{" "}
+                        <span className="fw-bold">{item.description}</span>
+                      </p>
+                    )}
+                  </section>
+                </div>
+              </div>
+            ))}
+        </Card.Body>
+      </Card>
 
       <CartModal
         items={items}

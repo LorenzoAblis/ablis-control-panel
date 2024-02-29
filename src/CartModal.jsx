@@ -4,9 +4,9 @@ import { db } from "../firebaseConfig";
 import { ref, set } from "firebase/database";
 
 import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import EditItemModal from "./EditItemModal";
 import CheckoutConfirmationModal from "./CheckoutConfirmationModal";
-import Modal from "react-bootstrap/Modal";
 
 const CartModal = (props) => {
   const { items, showCartModal, setShowCartModal } = props;
@@ -47,7 +47,7 @@ const CartModal = (props) => {
         <Modal.Header closeButton>
           <Modal.Title>Cart</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="d-flex flex-column gap-1">
           {items.filter((item) => item.completed).length == 0 && (
             <div className="d-flex justify-content-center">
               <h4 className="text-secondary">No items in cart</h4>
@@ -56,7 +56,7 @@ const CartModal = (props) => {
           {items
             .filter((item) => item.completed)
             .map((item, index) => (
-              <div className="d-flex gap-2 p-1" key={item.name}>
+              <div className="d-flex gap-2 p-2 rounded border" key={item.name}>
                 <h2 className="fw-bold">{item.name}</h2>
                 <Button
                   variant="secondary"
@@ -70,9 +70,9 @@ const CartModal = (props) => {
               </div>
             ))}
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleConfirmation}>Checkout</Button>
-        </Modal.Footer>
+        <Button onClick={handleConfirmation} className="m-2">
+          Checkout
+        </Button>
       </Modal>
 
       <EditItemModal
