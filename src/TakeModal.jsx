@@ -39,9 +39,7 @@ const TakeModal = (props) => {
           <Modal.Title>Take {item.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h5 className="w-100 text-center mb-3">
-            Current Amount: {item.quantity}
-          </h5>
+          <h5 className="w-100 text-center mb-3">In stock: {item.quantity}</h5>
           <InputGroup className="w-50 mx-auto">
             <Button
               variant="danger"
